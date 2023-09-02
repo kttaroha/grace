@@ -1,5 +1,7 @@
 import argparse
 import os.path
+import sys
+sys.path.append("./")
 
 from core import *
 from torch_backend import *
@@ -115,7 +117,6 @@ def main():
     test_batches = Batches(test_set, batch_size, shuffle=False, drop_last=False)
     lr = lambda step: lr_schedule(step / len(train_batches)) / batch_size
     opt = SGD(trainable_params(model), lr=lr, momentum=0.9, weight_decay=5e-4 * batch_size, nesterov=True)
-
     from grace_dl.dist.communicator.allgather import Allgather
     from grace_dl.dist.compressor.topk import TopKCompressor
     from grace_dl.dist.memory.residual import ResidualMemory
